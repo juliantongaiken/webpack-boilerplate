@@ -1,0 +1,15 @@
+block variables
+
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Julian's Webpack Starter Kit
+    meta(name="description" content="This is a sample boilerplate for static project startup.")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="theme-color" content="#fff")
+    block head
+  body.common(class=(body_class || ""))
+    include ../partials/header.pug
+    block body
+    include ../partials/footer.pug
