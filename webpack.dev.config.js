@@ -5,8 +5,6 @@
 
 const path = require('path');
 const fs = require('fs');
-const TerserPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
@@ -35,9 +33,14 @@ module.exports = {
     entry: './src/scripts/main.js',
     output: {
 		path: path.resolve(__dirname, './dist'),
-		filename: 'main.[contenthash].js',
+		filename: 'main.js',
 		publicPath: ''
-	},
+    },
+    devServer: {
+        contentBase: path.resolve(__dirname, './dist'),
+        index: 'index.html',
+        port: 8080,
+    },
 	module: {
 		rules: [
 			{
@@ -49,14 +52,14 @@ module.exports = {
 			{
 				test: /\.(css)$/,
 				use: [
-					MiniCssExtractPlugin.loader,
+					'style-loader',
 					'css-loader'
 				],
 			},
 			{
 				test: /\.(scss)$/,
 				use: [
-					MiniCssExtractPlugin.loader,
+					'style-loader',
 					'css-loader',
 					'sass-loader'
 				],
@@ -81,10 +84,6 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new TerserPlugin(),
-		new MiniCssExtractPlugin({
-			filename: 'main.[contenthash].css',
-		}),
 		new CleanWebpackPlugin(),
 		new FriendlyErrorsWebpackPlugin(),
 		new CopyPlugin([
